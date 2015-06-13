@@ -15,8 +15,8 @@ Let's assume you have a dataframe in R called **towncoffeeshops** that looks lik
 Town | Coffeeshops
 --- | ---:
 Andover | 2
-Ansonia | 5
-Ashford | 1
+Centerbrook | 5
+Yalesville | 1
 
 *Run this in R*
 ```ssh
