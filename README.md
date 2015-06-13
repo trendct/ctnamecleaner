@@ -9,7 +9,7 @@ An R package that finds that takes a list of Connecticut hamlets or neighborhood
 -  Based on an [ever-growing list](https://docs.google.com/spreadsheets/d/1WqZIGk2AkHXKYvd4uXy5a2nwyg529e7mMU5610Ale0g/edit?usp=sharing) of town names that [TrendCT.org](http://www.trendct.org) comes across. 
 
 
-#####What it does
+####What it does
 Let's assume you have a dataframe in R called **towncoffeeshops** that looks like
 
 Town | Coffeeshops
@@ -35,24 +35,24 @@ Andover | 2 | ANDOVER | 3095
 Centerbrook | 5 | ESSEX | 6668
 Yalesville | 1 | WALLINGFORD | 45112
 
-#####Usage
+####Usage
 
 ```ssh
 ctnamecleaner(name, data, filename="combined", case="Title")
 ```
 
-#####Arguments
+####Arguments
 - **name** - Column with town names
 - **data** - Name of data frame
 - **filename** Name of CSV to save
 - **case** Output of town string. Options are **Upper**, **Lower**, and **Title**
 
 
-#####What you'll need to start
+####What you'll need to start
   - [R](http://www.r-project.org/)
   - [RStudio](http://www.rstudio.com/) (not really, but sure)
 
-#####What to run within R or RStudio
+####What to run within R or RStudio
 Assuming user is starting from scratch
 ```ssh
 install.packages("devtools")
