@@ -7,17 +7,41 @@
 #' @param filename Name of CSV to save
 #' @param case Output of town string. Options are \code{Upper}, \code{Lower}, and \code{Title}
 #' @return Whatever
+#' @import dplyr
+#' @importFrom stringr str_to_upper
+#' @importFrom stringr str_to_lower
+#' @importFrom stringr str_to_title
 #' @export 
 #' @examples
-#' #ctnamecleaner(name_column, ctdata, filename="analysis", case="Upper")
+#' \dontrun{
+#' ctnamecleaner(name_column, ctdata, filename="analysis", case="Upper")
+#' }
+NULL 
+
+#' Town populations list
+#' @docType data
+#' @keywords datasets
+#' @format A data frame
+#' @name pop
+NULL
+
+#' Assorted town names list
+#' @docType data
+#' @keywords datasets
+#' @format A data frame
+#' @name the_list
+NULL
+
+require(stringr)
 
 require(dplyr)
-require(stringr)
+globalVariables(c("pop", "the_list"))
 
 ctnamecleaner <- function(name, data, filename="combined", case="Title") {
   data$name <- as.character(data$name)  
   data$name <- str_to_upper(data$name)
-  the_list <- read.csv("townlist.csv", stringsAsFactors=FALSE)
+  the_list <- the_list
+  #the_list <- read.csv("data/townlist.csv", stringsAsFactors=FALSE)
 
   composite <- left_join(data, the_list)
 
@@ -27,7 +51,8 @@ cat("\nWould you also like to add a column for town population?")
 step <- readline("(y/n)  ")
 
 if (step=="y" | step=="Y" | step=="Yes" | step=="yes") {
-  pop <- read.csv("ctpop.csv", stringsAsFactors=FALSE)
+  #pop <- read.csv("data/ctpop.csv", stringsAsFactors=FALSE)
+  pop
   composite <- left_join(composite, pop)  
   if (case=="Upper") {
     composite$name <- str_to_upper(composite$name)

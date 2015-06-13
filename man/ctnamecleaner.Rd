@@ -19,6 +19,8 @@ Whatever
 Cleans up Connecticut town names and adds population if the user wants and then exports the modified dataframe as a CSV.
 }
 \examples{
-#ctnamecleaner(name_column, ctdata, filename="analysis", case="Upper")
+\dontrun{
+ctnamecleaner(name_column, ctdata, filename="analysis", case="Upper")
+}
 }
 
