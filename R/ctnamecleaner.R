@@ -1,7 +1,17 @@
-
-# ctnamecleaner(name, data, filename="combined", case="Title")
-library(dplyr)
-library(stringr)
+#' CT Town name cleaner
+#'  
+#' Cleans up Connecticut town names and adds population if the user wants and then exports the modified dataframe as a CSV.
+#' @name ctnamecleaner
+#' @param name Column with town names
+#' @param data Name of dataframe
+#' @param filename Name of CSV to save
+#' @param case Output of town string. Options are \code{Upper}, \code{Lower}, and \code{Title}
+#' @return Whatever
+#' @export 
+#' @examples
+#' #ctnamecleaner(name_column, ctdata, filename="analysis", case="Upper")
+require(dplyr)
+require(stringr)
 
 ctnamecleaner <- function(name, data, filename="combined", case="Title") {
   data$name <- as.character(data$name)  

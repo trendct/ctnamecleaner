@@ -4,5 +4,5 @@ Version: 0.0.0.9000
 Authors@R: person("Andrew", "Tran", email = "abtran@gmail.com.com", role = c("aut", "cre"))
 Description: Fixes Connecticut town names and optionally adds population statS
 Depends: R (>= 3.2.0)
-License: GPL-2
+License: MIT
 LazyData: true
