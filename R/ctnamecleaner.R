@@ -10,8 +10,6 @@
 #' @export 
 #' @examples
 #' #ctnamecleaner(name_column, ctdata, filename="analysis", case="Upper")
-require(dplyr)
-require(stringr)
 
 ctnamecleaner <- function(name, data, filename="combined", case="Title") {
   data$name <- as.character(data$name)  

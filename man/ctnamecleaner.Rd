@@ -3,6 +3,9 @@
 \name{ctnamecleaner}
 \alias{ctnamecleaner}
 \title{CT Town name cleaner}
+\usage{
+ctnamecleaner(name, data, filename = "combined", case = "Title")
+}
 \arguments{
 \item{name}{Column with town names}
 

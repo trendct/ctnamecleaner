@@ -6,3 +6,5 @@ Description: Fixes Connecticut town names and optionally adds population statS
 Depends: R (>= 3.2.0)
 License: MIT
 LazyData: true
+Imports: dplyr,
+    stringr
