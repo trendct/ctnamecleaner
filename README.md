@@ -61,6 +61,12 @@ library(devtools)
 install_github("trendct/ctnamecleaner")
 library(ctnamecleaner)
 ```
+
+###What's next
+  - Have it create a new dataframe in the RStudio Global Environment
+  - Make export as a CSV an option and not default
+  - Pull list straight from the Google Spreadsheet and not hardcoded data
+
 ### Version
 0.0.0.9
 
