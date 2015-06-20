@@ -1,6 +1,6 @@
 #' CT Town name cleaner
 #'  
-#' Cleans up Connecticut town names and adds population if the user wants and then exports the modified dataframe as a CSV.
+#' Cleans up Connecticut town names.
 #' @name ctnamecleaner
 #' @param name Column with town names
 #' @param data Name of dataframe
@@ -11,19 +11,13 @@
 #' @importFrom stringr str_to_upper
 #' @importFrom stringr str_to_lower
 #' @importFrom stringr str_to_title
+#' @importFrom stringr str_trim
 #' @export 
 #' @examples
 #' \dontrun{
 #' ctnamecleaner(name_column, ctdata, filename="analysis", case="Upper")
 #' }
 NULL 
-
-#' Town populations list
-#' @docType data
-#' @keywords datasets
-#' @format A data frame
-#' @name pop
-NULL
 
 #' Assorted town names list
 #' @docType data
@@ -35,43 +29,17 @@ NULL
 require(stringr)
 
 require(dplyr)
-globalVariables(c("pop", "the_list"))
+globalVariables("the_list")
 
-ctnamecleaner <- function(name, data, filename="combined", case="Title") {
+ctnamecleaner <- function(name, data, filename="nope", case="Title") {
   data$name <- as.character(data$name)  
   data$name <- str_to_upper(data$name)
+  data$name <- str_trim(data$name)
   the_list <- the_list
-  #the_list <- read.csv("data/townlist.csv", stringsAsFactors=FALSE)
-
+  #the_list <- read.csv("data-raw/townlist.csv", stringsAsFactors=FALSE)
+  the_list$name <- str_trim(the_list$name)
   composite <- left_join(data, the_list)
 
-  file <- paste(filename, ".csv", sep="")
-
-cat("\nWould you also like to add a column for town population?")
-step <- readline("(y/n)  ")
-
-if (step=="y" | step=="Y" | step=="Yes" | step=="yes") {
-  #pop <- read.csv("data/ctpop.csv", stringsAsFactors=FALSE)
-  pop
-  composite <- left_join(composite, pop)  
-  if (case=="Upper") {
-    composite$name <- str_to_upper(composite$name)
-    composite$real.town.name <- str_to_upper(composite$real.town.name)
-  } else if (case=="Lower") {
-    composite$name <- str_to_lower(composite$name)
-    composite$real.town.name <- str_to_lower(composite$real.town.name)
-  } else {
-    composite$name <- str_to_title(composite$name)
-    composite$real.town.name <- str_to_title(composite$real.town.name)
-  }
-  write.csv(composite, file)
-  if (sum(is.na(composite$real.town.name)) > 0 ) {
-    bad_names <- subset(composite, is.na(composite$real.town.name))
-    cat("Your file with fixed town names has been exported. \nUnfortunately, no matches were found for: ", bad_names$name, " ")
-  } else {
-    print("Congrats. Town names scanned, population. New has been file exported.")
-  }  
-} else if (step=="n" | step=="N" | step=="No" | step=="no") {
   if (case=="Upper") {
     composite$name <- str_to_upper(composite$name)
     composite$real.town.name <- str_to_upper(composite$real.town.name)
@@ -83,13 +51,19 @@ if (step=="y" | step=="Y" | step=="Yes" | step=="yes") {
     composite$real.town.name <- str_to_title(composite$real.town.name)
   }
   
+  if (sum(is.na(composite$real.town.name)) > 0 ) {
+    bad_names <- subset(composite, is.na(composite$real.town.name))
+    cat("Your file with fixed town names has been exported. \nUnfortunately, no matches were found for: ", bad_names$name, " ")
+  } else {
+    print("...All names matched. That's a good thing.")
+  }
+  
+  if (filename != "nope") {
+  file <- paste(filename, ".csv", sep="")
   write.csv(composite, file)
-    if (sum(is.na(composite$real.town.name)) > 0 ) {
-      bad_names <- subset(composite, is.na(composite$real.town.name))
-      cat("Your file with fixed town names has been exported. \nUnfortunately, no matches were found for: ", bad_names$name, " ")
-    } else {
-      print("Congrats. Town names scanned. New has been file exported.")
-    }
-} else print("Sorry, your choice is not recognized")
-
+  print(paste("Congrats. The new file has been exported and is is called ", file, sep=""))
+  } else {
+    CTNAMECLEANED <- composite
+    print("Congrats. The new dataframe is called CTNAMECLEANED. \nDon't forget to collapse the duplicate rows and sum/average the numeric columns.")  
+  }
 }

@@ -16,7 +16,7 @@
 Whatever
 }
 \description{
-Cleans up Connecticut town names and adds population if the user wants and then exports the modified dataframe as a CSV.
+Cleans up Connecticut town names.
 }
 \examples{
 \dontrun{

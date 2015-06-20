@@ -3,13 +3,12 @@
 An R package that finds that takes a list of Connecticut hamlets or neighborhoods and adds a column with the matching official town names. 
 
 - Matches hamlets or neighborhoods to equivalent town names
--  Also asks if you would like an additional column with town population numbers
--  Exports a new CSV file automatically
+- Adds additional column with population
+-  Optionally exports a new CSV file
 -  Lists names that could not be matched to towns
 -  Based on an [ever-growing list](https://docs.google.com/spreadsheets/d/1WqZIGk2AkHXKYvd4uXy5a2nwyg529e7mMU5610Ale0g/edit?usp=sharing) of town names that [TrendCT.org](http://www.trendct.org) comes across. 
 
-
-####What it does
+####What function ctnamecleaner() does
 Let's assume you have a dataframe in R called **towncoffeeshops** that looks like
 
 Town | Coffeeshops
@@ -22,12 +21,35 @@ Yalesville | 1
 ```ssh
 ctnamecleaner(Town, towncoffeeshops, filename="towncoffeecleaned", case="Upper")
 ```
-*This response will appear*
+You'll get a new file called **towncoffeecleaned.csv** that looks like
+
+Town | Coffeeshops | real.town.name
+--- | ---: | --- 
+Andover | 2 | ANDOVER
+Centerbrook | 5 | ESSEX
+Yalesville | 1 | WALLINGFORD
+
+####Usage
+
 ```ssh
-Would you also like to add a column for town population?
-(y/n)
+ctnamecleaner(name, data, filename="none", case="Title")
 ```
-If you press **y** and enter, you'll get a new file called **towncoffeecleaned.csv** that looks like
+
+####Arguments
+- **name** - Column with town names
+- **data** - Name of data frame. 
+- **filename** Name of CSV to save. If skipped, CSV will not export. Instead, dataframe *CTNAMECLEANED* will be created
+- **case** Output of town string. Options are **Upper**, **Lower**, and **Title**
+
+
+####What function ctpopulator() does
+Let's assume you've collapsed duplicate town names column **real.town.name** in the **CTNAMECLEANED** dataframe above and summed up or averaged the figures you were working with. 
+
+*Run this in R*
+```ssh
+ctpopulator(real.town.name, CTNAMECLEANED, filename="towncoffeepop")
+```
+You'll get a new file called **towncoffeepop.csv** that looks like. *Note* if you leave out the **filename** parameter, dataframe **CTPOPULATED** will be created and no CSV will be exported.
 
 Town | Coffeeshops | real.town.name | pop2013
 --- | ---: | --- | ---:
@@ -38,15 +60,14 @@ Yalesville | 1 | WALLINGFORD | 45112
 ####Usage
 
 ```ssh
-ctnamecleaner(name, data, filename="combined", case="Title")
+ctnamecleaner(name, data, filename="none")
 ```
 
 ####Arguments
 - **name** - Column with town names
-- **data** - Name of data frame
-- **filename** Name of CSV to save
+- **data** - Name of data frame. 
+- **filename** Name of CSV to save. If skipped, CSV will not export. Instead, dataframe *CTNAMECLEANED* will be created
 - **case** Output of town string. Options are **Upper**, **Lower**, and **Title**
-
 
 ####What you'll need to start
   - [R](http://www.r-project.org/)
@@ -63,11 +84,9 @@ library(ctnamecleaner)
 ```
 
 ###What's next
-  - Have it create a new dataframe in the RStudio Global Environment
-  - Make export as a CSV an option and not default
   - Pull list straight from the Google Spreadsheet and not hardcoded data
 
 ### Version
-0.0.0.9
+0.0.1
 
 MIT
