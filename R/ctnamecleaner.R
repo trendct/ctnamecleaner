@@ -31,8 +31,17 @@ require(stringr)
 require(dplyr)
 globalVariables("the_list")
 
+
+#library(plyr) 
+#df <- data.frame(foo=rnorm(1000)) 
+#df <- rename(df,c('foo'='samples'))
+
 ctnamecleaner <- function(name, data, filename="nope", case="Title") {
-  names(data)[names(data)==name] <- "name2"
+  
+  newdata <- as.list(match.call())
+  thename <- as.character(newdata$name)
+  names(data)[names(data)==thename] <- "name2"
+    
   data$name2 <- as.character(data$name2)  
   data$name2 <- str_to_upper(data$name2)
   data$name2 <- str_trim(data$name2)
@@ -61,7 +70,7 @@ ctnamecleaner <- function(name, data, filename="nope", case="Title") {
     print("...All names matched. That's a rare thing.")
   }
   
-  colnames(data)[name2] <- name
+  names(composite)[names(composite)=="name2"] <- thename
   
   if (filename != "nope") {
   file <- paste(filename, ".csv", sep="")
