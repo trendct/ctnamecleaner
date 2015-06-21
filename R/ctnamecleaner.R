@@ -32,7 +32,7 @@ require(dplyr)
 globalVariables("the_list")
 
 ctnamecleaner <- function(name, data, filename="nope", case="Title") {
-  colnames(data)[name] <- "name2"
+  names(data)[names(data)==name] <- "name2"
   data$name2 <- as.character(data$name2)  
   data$name2 <- str_to_upper(data$name2)
   data$name2 <- str_trim(data$name2)
