@@ -37,7 +37,7 @@ globalVariables("the_list")
 #df <- rename(df,c('foo'='samples'))
 
 ctnamecleaner <- function(name, data, filename="nope", case="Title") {
-  
+  CTDATA <- data
   newdata <- as.list(match.call())
   thename <- as.character(newdata$name)
   names(data)[names(data)==thename] <- "name2"
@@ -45,8 +45,9 @@ ctnamecleaner <- function(name, data, filename="nope", case="Title") {
   data$name2 <- as.character(data$name2)  
   data$name2 <- str_to_upper(data$name2)
   data$name2 <- str_trim(data$name2)
-  the_list <- the_list
+  #the_list <- the_list
   #the_list <- read.csv("data-raw/townlist.csv", stringsAsFactors=FALSE)
+  colnames(the_list) <- c("name2", "real.town.name")
   the_list$name2 <- str_trim(the_list$name2)
   composite <- left_join(data, the_list)
 
@@ -63,8 +64,8 @@ ctnamecleaner <- function(name, data, filename="nope", case="Title") {
   
   if (sum(is.na(composite$real.town.name)) > 0 ) {
     bad_names <- subset(composite, is.na(composite$real.town.name))
-    cat("Your file with fixed town names has been exported. \nUnfortunately, no matches were found for: ", bad_names$name2, " ")
-    print("They can be found in your folder. The file is called no_matches.csv")
+    cat("Your file with fixed town names has been exported. \nUnfortunately, no matches were found for ", nrow(bad_names), " ")
+    cat("They can be found in your folder. The file is called no_matches.csv")
     write.csv(bad_names$name2, "no_matches.csv")
   } else {
     print("...All names matched. That's a rare thing.")
@@ -75,9 +76,9 @@ ctnamecleaner <- function(name, data, filename="nope", case="Title") {
   if (filename != "nope") {
   file <- paste(filename, ".csv", sep="")
   write.csv(composite, file)
-  print(paste("Congrats. The new file has been exported and is is called ", file, sep=""))
+  cat(paste("\nCongrats. The new file has been exported and is is called ", file, sep=""))
   } else {
-    CTNAMECLEANED <- composite
-    print("Congrats. The new dataframe is called CTNAMECLEANED. \nDon't forget to collapse the duplicate rows and sum/average the numeric columns.")  
+    CTDATA <<- composite
+    cat("Congrats. The new dataframe is called CTDATA. \nDon't forget to collapse the duplicate rows and sum/average the numeric columns.")  
   }
 }
