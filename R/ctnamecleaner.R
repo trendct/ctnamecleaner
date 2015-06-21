@@ -32,32 +32,36 @@ require(dplyr)
 globalVariables("the_list")
 
 ctnamecleaner <- function(name, data, filename="nope", case="Title") {
-  colnames(data)[name] <- "name"
-  data$name <- as.character(data$name)  
-  data$name <- str_to_upper(data$name)
-  data$name <- str_trim(data$name)
+  colnames(data)[name] <- "name2"
+  data$name2 <- as.character(data$name2)  
+  data$name2 <- str_to_upper(data$name2)
+  data$name2 <- str_trim(data$name2)
   the_list <- the_list
   #the_list <- read.csv("data-raw/townlist.csv", stringsAsFactors=FALSE)
-  the_list$name <- str_trim(the_list$name)
+  the_list$name2 <- str_trim(the_list$name2)
   composite <- left_join(data, the_list)
 
   if (case=="Upper") {
-    composite$name <- str_to_upper(composite$name)
-    composite$real.town.name <- str_to_upper(composite$real.town.name)
+    composite$name2 <- str_to_upper(composite$name2)
+    composite$real.town.name2 <- str_to_upper(composite$real.town.name2)
   } else if (case=="Lower") {
-    composite$name <- str_to_lower(composite$name)
-    composite$real.town.name <- str_to_lower(composite$real.town.name)
+    composite$name2 <- str_to_lower(composite$name2)
+    composite$real.town.name2 <- str_to_lower(composite$real.town.name2)
   } else {
-    composite$name <- str_to_title(composite$name)
+    composite$name2 <- str_to_title(composite$name2)
     composite$real.town.name <- str_to_title(composite$real.town.name)
   }
   
   if (sum(is.na(composite$real.town.name)) > 0 ) {
     bad_names <- subset(composite, is.na(composite$real.town.name))
-    cat("Your file with fixed town names has been exported. \nUnfortunately, no matches were found for: ", bad_names$name, " ")
+    cat("Your file with fixed town names has been exported. \nUnfortunately, no matches were found for: ", bad_names$name2, " ")
+    print("They can be found in your folder. The file is called no_matches.csv")
+    write.csv(bad_names$name2, "no_matches.csv")
   } else {
-    print("...All names matched. That's a good thing.")
+    print("...All names matched. That's a rare thing.")
   }
+  
+  colnames(data)[name2] <- name
   
   if (filename != "nope") {
   file <- paste(filename, ".csv", sep="")
