@@ -45,8 +45,9 @@ ctnamecleaner <- function(name, data, filename="nope", case="Title") {
   data$name2 <- as.character(data$name2)  
   data$name2 <- str_to_upper(data$name2)
   data$name2 <- str_trim(data$name2)
-  #the_list <- the_list
+  #updating the_list
   #the_list <- read.csv("data-raw/townlist.csv", stringsAsFactors=FALSE)
+  #save(the_list, file="data/the_list.rda")
   colnames(the_list) <- c("name2", "real.town.name")
   the_list$name2 <- str_trim(the_list$name2)
   composite <- left_join(data, the_list)
