@@ -50,7 +50,6 @@ ctpopulator <- function(name, data, filename="nope") {
     write.csv(composite, file)
     print(paste("Congrats. The new file has been exported and is is called ", file, sep=""))
   } else {
-    CTPOPULATED <<- composite
-    print("Congrats. The new dataframe is called CTPOPULATED.")  
+    composite
   }
 }

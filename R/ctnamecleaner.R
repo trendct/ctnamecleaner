@@ -79,7 +79,6 @@ ctnamecleaner <- function(name, data, filename="nope", case="Title") {
   write.csv(composite, file)
   cat(paste("\nCongrats. The new file has been exported and is is called ", file, sep=""))
   } else {
-    CTDATA <<- composite
-    cat("Congrats. The new dataframe is called CTDATA. \nDon't forget to collapse the duplicate rows and sum/average the numeric columns.")  
+    composite 
   }
 }

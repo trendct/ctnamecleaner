@@ -38,7 +38,7 @@ ctnamecleaner(name, data, filename="none", case="Title")
 ####Arguments
 - **name** - Column with town names
 - **data** - Name of data frame. 
-- **filename** Name of CSV to save. If skipped, CSV will not export. Instead, dataframe *CTNAMECLEANED* will be created
+- **filename** Name of CSV to save. If skipped, CSV will not export
 - **case** Output of town string. Options are **Upper**, **Lower**, and **Title**
 
 
@@ -49,7 +49,7 @@ Let's assume you've collapsed duplicate town names column **real.town.name** in 
 ```ssh
 ctpopulator(real.town.name, CTNAMECLEANED, filename="towncoffeepop")
 ```
-You'll get a new file called **towncoffeepop.csv** that looks like the table below. *Note:* if you leave out the **filename** parameter, dataframe **CTPOPULATED** will be created and no CSV will be exported.
+You'll get a new file called **towncoffeepop.csv** that looks like the table below. *Note:* if you exclude the CSV **filename** parameter only the dataframe will be exported and can be assigned to a variable. 
 
 Town | Coffeeshops | real.town.name | pop2013
 --- | ---: | --- | ---:
@@ -66,7 +66,7 @@ ctnamecleaner(name, data, filename="none")
 ####Arguments
 - **name** - Column with town names
 - **data** - Name of data frame. 
-- **filename** Name of CSV to save. If skipped, CSV will not export. Instead, dataframe *CTNAMECLEANED* will be created
+- **filename** Name of CSV to save. If skipped, CSV will not export.
 - **case** Output of town string. Options are **Upper**, **Lower**, and **Title**
 
 ####What you'll need to start
