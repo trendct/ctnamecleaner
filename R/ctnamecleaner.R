@@ -8,6 +8,7 @@
 #' @param case Output of town string. Options are \code{Upper}, \code{Lower}, and \code{Title}
 #' @return Whatever
 #' @import dplyr
+#' @import RCurl
 #' @importFrom stringr str_to_upper
 #' @importFrom stringr str_to_lower
 #' @importFrom stringr str_to_title
@@ -19,18 +20,9 @@
 #' }
 NULL 
 
-#' Assorted town names list
-#' @docType data
-#' @keywords datasets
-#' @format A data frame
-#' @name the_list
-NULL
-
 require(stringr)
-
 require(dplyr)
-globalVariables("the_list")
-
+require(RCurl)
 
 #library(plyr) 
 #df <- data.frame(foo=rnorm(1000)) 
@@ -48,6 +40,10 @@ ctnamecleaner <- function(name, data, filename="nope", case="Title") {
   #updating the_list
   #the_list <- read.csv("data-raw/townlist.csv", stringsAsFactors=FALSE)
   #save(the_list, file="data/the_list.rda")
+  
+  url <- "https://docs.google.com/spreadsheets/d/1WqZIGk2AkHXKYvd4uXy5a2nwyg529e7mMU5610Ale0g/pub?gid=0&single=true&output=csv&id=1WqZIGk2AkHXKYvd4uXy5a2nwyg529e7mMU5610Ale0g"
+  the_csv <- getURL(url,.opts=list(ssl.verifypeer=FALSE))
+  the_list <- read.csv(textConnection(the_csv))
   colnames(the_list) <- c("name2", "real.town.name")
   the_list$name2 <- str_trim(the_list$name2)
   composite <- left_join(data, the_list)

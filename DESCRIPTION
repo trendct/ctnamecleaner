@@ -1,10 +1,11 @@
 Package: ctnamecleaner
 Title: Connecticut Town Name and Population Matcher
-Version: 0.0.1
+Version: 0.2.1
 Authors@R: person("Andrew", "Tran", email = "abtran@gmail.com.com", role = c("aut", "cre"))
 Description: Fixes Connecticut town names and optionally adds population stats.
 Depends: R (>= 3.2.0)
 License: MIT+ file LICENSE
 LazyData: true
 Imports: dplyr,
-    stringr
+    stringr,
+    RCurl
