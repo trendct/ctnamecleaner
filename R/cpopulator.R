@@ -17,17 +17,8 @@
 #' }
 NULL 
 
-#' Town populations list
-#' @docType data
-#' @keywords datasets
-#' @format A data frame
-#' @name pop
-NULL
-
 require(stringr)
 require(dplyr)
-
-globalVariables("pop")
 
 ctpopulator <- function(name, data, filename="nope") {
   print("Checking to see if names match...")
@@ -36,12 +27,15 @@ ctpopulator <- function(name, data, filename="nope") {
 
   names(data)[names(data)==thename] <- "name2"
 
-    data$name2 <- as.character(data$name2)  
+  data$name2 <- as.character(data$name2)  
   data$name2 <- str_to_upper(data$name2)
   data$name2 <- str_trim(data$name2)
 
   #pop <- read.csv("data-raw/ctpop.csv", stringsAsFactors=FALSE)
-  pop <- pop
+  url <- "https://docs.google.com/spreadsheets/d/1xK4iKqW-uhX5UcK7g28M85HSUUubhWj3HzieT3VeAyo/pub?output=csv&id=1xK4iKqW-uhX5UcK7g28M85HSUUubhWj3HzieT3VeAyo"
+  the_csv <- getURL(url,.opts=list(ssl.verifypeer=FALSE))
+  pop <- read.csv(textConnection(the_csv))
+  
   colnames(pop) <- c("name2", "pop2013")
   composite <- left_join(data, pop)  
 
