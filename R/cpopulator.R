@@ -33,17 +33,20 @@ ctpopulator <- function(name, data, filename="nope") {
   print("Checking to see if names match...")
   newdata <- as.list(match.call())
   thename <- as.character(newdata$name)
+
   names(data)[names(data)==thename] <- "name2"
-  data$name2 <- as.character(data$name2)  
+
+    data$name2 <- as.character(data$name2)  
   data$name2 <- str_to_upper(data$name2)
   data$name2 <- str_trim(data$name2)
-  
+
   #pop <- read.csv("data-raw/ctpop.csv", stringsAsFactors=FALSE)
   pop <- pop
   colnames(pop) <- c("name2", "pop2013")
   composite <- left_join(data, pop)  
+
   names(composite)[names(composite)=="name2"] <- thename
-  
+
   
   if (filename != "nope") {
     file <- paste(filename, ".csv", sep="")
