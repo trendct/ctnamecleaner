@@ -95,7 +95,7 @@ ctnamecleaner(name, data, filename="nope")
 
 ## ctcorrelator
 
-An R package that takes a town dataframe and checks for correlations between the original data set and 500 different variables including demographics, median income, education attainment, and poverty from an [ever-growing list](https://docs.google.com/a/trendct.org/spreadsheets/d/1TMN4Di8O7ROUDgylb7IvtnfNtblbwoHy-dpgId6FT3E/edit?usp=sharing). It then .
+An R package that takes a town dataframe and checks for correlations between the original data set and 500 different variables including demographics, median income, education attainment, and poverty from an [ever-growing list](https://docs.google.com/a/trendct.org/spreadsheets/d/1TMN4Di8O7ROUDgylb7IvtnfNtblbwoHy-dpgId6FT3E/edit?usp=sharing). **Why?** Correlation does not mean causation. But having a quickly generated list could help point a researcher of journalist into unforseen directions with respect to the original data.
 
 - Appends the original dataframe with ~500 other variables from ~20 spreadsheets
 - Determines the Pearson product-moment correlation coefficient for each variable as compared to the original data
