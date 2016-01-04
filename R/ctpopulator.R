@@ -4,6 +4,7 @@
 #' @name ctpopulator
 #' @param name Column with town names
 #' @param data Name of dataframe
+#' @param filename Name of CSV to export. Default is `nope` which creates dataframe without exporting.
 #' @return Whatever
 #' @import dplyr
 #' @importFrom stringr str_to_upper

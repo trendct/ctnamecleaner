@@ -1,11 +1,35 @@
+#' CT Correlation Finder
+#'  
+#' Compares an array town data to ~500 variables to check if there are any strong correlations. Exports two CSV files and one chart.
+#' @name ctcorrelator
+#' @param dat_data Dataframe to compare. Columns must be labeled "town" and "variable". Highly recommend running ctnamecleaner() on it to make sure town names match.
+#' @param p Sets Pearson product-moment correlation coefficient. Default is .9.
+#' @return Whatever
+#' @import dplyr
+#' @import RCurl
+#' @import reshape
+#' @import ggplot2
+#' @importFrom stringr str_to_upper
+#' @importFrom stringr str_to_lower
+#' @importFrom stringr str_to_title
+#' @importFrom stringr str_trim
+#' @export
+#' @examples
+#' \dontrun{
+#' ctcorrelator <- function(dat_data, p=.9) 
+#' }
+NULL 
 
 require(stringr)
 require(dplyr)
 require(RCurl)
-library(reshape)
-library(ggplot2)
+require(reshape)
+require(ggplot2)
 
 # pull main spreadsheet that has all links and spreadsheet details
+
+ctcorrelator <- function(dat_data, p=.9) {
+
 url <- "https://docs.google.com/spreadsheets/d/1TMN4Di8O7ROUDgylb7IvtnfNtblbwoHy-dpgId6FT3E/pub?output=csv&id=1TMN4Di8O7ROUDgylb7IvtnfNtblbwoHy-dpgId6FT3E"
 the_csv <- getURL(url,.opts=list(ssl.verifypeer=FALSE))
 master_dataframe <- read.csv(textConnection(the_csv))
@@ -36,8 +60,13 @@ for (i in mdf_links_list) {
 
 # Compare target dataframe with the huge mega dataframe to find correlations
 
-target <- read.csv("overdoses.csv", stringsAsFactors=FALSE)
-target <- target[c("Town", "Overdoses")]
+target <- dat_data
+
+target_col_names <- colnames(target)
+target_col_names <- str_to_title(target_col_names) 
+
+colnames(target) <- str_to_lower(colnames(target)) 
+
 colnames(target) <- c("town", "overdoses")
   
 original_array <- target
@@ -93,7 +122,8 @@ array_summary <- array %>%
   group_by(correlation) %>%
   summarise(n())
 
-array_summary
+print(array_summary)
+print("summary exported to array_summary.csv")
 
 write.csv(array_summary, "array_summary.csv")
 
@@ -114,27 +144,11 @@ m_df_names <- master_dataframe %>%
 strong.very.strong <- left_join(strong.very.strong, m_df_names)  
 
 write.csv(strong.very.strong, "strong.very.strong.csv")
-
+print("variables with strong/very strong correlations has been exported as strong.very.strong.csv")
 very.correlated <- strong.very.strong %>%
-  filter(correlation=="very.strong.negative.correlation" | correlation=="very.strong.positive.correlation")
+  filter(raw >= p)
 
 very.strong.list <- very.correlated[c("column.abbrev")]
-
-
-very.strong.list <- left_join(very.strong.list, master_dataframe)
-
-very.strong.dataframe
-
-for (i in 1:nrow(very.strong.list)) {
-  url <- very.strong.list$link[i]
-  the_csv <- getURL(url,.opts=list(ssl.verifypeer=FALSE))
-  vs_sheet <- read.csv(textConnection(the_csv))
-  if (i != 1) {
-    vs_master <- left_join(vs_master, vs_sheet)
-  } else {
-    vs_master <- vs_sheet
-  }
-}
 
 mdf_copy <- mdf_master
 saved_column_names <- colnames(mdf_copy)
@@ -166,3 +180,9 @@ mdata <- melt(very.strong.data.frame, id=c("town","overdoses"))
 
 sp <- ggplot(mdata, aes(x=value, y=overdoses)) + geom_point(shape=1)
 sp + facet_wrap(~ variable, ncol=3, scales="free_x")
+
+ggsave("plot.png",scale=2)
+exit_line <- paste("Charts of all correlations higher than", p, "have been exported as plot.png")
+print(exit_line)
+
+}

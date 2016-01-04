@@ -8,7 +8,7 @@
 
 \item{data}{Name of dataframe}
 
-\item{filename}{Name of CSV to save}
+\item{filename}{Name of CSV to export. Default is `nope` which just creates dataframe without exporting.}
 
 \item{case}{Output of town string. Options are \code{Upper}, \code{Lower}, and \code{Title}}
 }

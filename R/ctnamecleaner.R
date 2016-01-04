@@ -4,7 +4,7 @@
 #' @name ctnamecleaner
 #' @param name Column with town names
 #' @param data Name of dataframe
-#' @param filename Name of CSV to save
+#' @param filename Name of CSV to export. Default is `nope` which just creates dataframe without exporting.
 #' @param case Output of town string. Options are \code{Upper}, \code{Lower}, and \code{Title}
 #' @return Whatever
 #' @import dplyr
