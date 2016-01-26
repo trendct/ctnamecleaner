@@ -16,7 +16,7 @@ Compares an array town data to ~500 variables to check if there are any strong c
 }
 \examples{
 \dontrun{
-ctcorrelator <- function(dat_data, p=.9)
+ctcorrelator(dat_data, p=.9)
 }
 }
 

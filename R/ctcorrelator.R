@@ -16,7 +16,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' ctcorrelator <- function(dat_data, p=.9) 
+#' ctcorrelator(dat_data, p=.9) 
 #' }
 NULL 
 
